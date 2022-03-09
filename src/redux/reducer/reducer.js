@@ -1,7 +1,8 @@
 import { ADD_INPUT_VALUE,SUB_INPUT_VALUE,MUL_INPUT_VALUE,DIV_INPUT_VALUE } from "../constants";
 
 const initialState = {
-    output: 0
+    output: 0,
+    
   }
   
   const CalReducer = (state = initialState, action) => {

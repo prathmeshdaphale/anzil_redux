@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addvalue, subvalue, mulvalue, divivalue } from "../redux/actions/inputvalue";
+import { addvalue, subvalue, mulvalue, divivalue, InputHandle } from "../redux/actions/inputvalue";
 import Assn1Output from "./assnoutput";
 
 export const AssignmentFirst = () => {
     const dispatch = useDispatch();
     const state = useSelector(state => state?.CalReducer)
-
+    const Handlestate =useSelector(state=> state?.HandleReducer)
     const [value, setValue] = useState({
         firstIP: 0,
         secondIP: 0
@@ -19,7 +19,6 @@ export const AssignmentFirst = () => {
     ])
     const handleSubmit = (data, e) => {
         e.preventDefault();
-        console.log('val', data)
         if (data === 'add') {
             dispatch(addvalue(value));
         }
@@ -30,16 +29,18 @@ export const AssignmentFirst = () => {
             dispatch(mulvalue(value));
         }
         if (data === 'div') {
-            if (value.firstIP && value.secondIP !== 0) {
+            if (value.firstIP!==0 && value.secondIP !== 0) {
 
                 dispatch(divivalue(value));
             }
         }
+        dispatch(InputHandle(value))
+
     }
     const handleInput = e => {
         setValue({ ...value, [e.target.name]: e.target.value });
     }
-
+console.log('Handlestate',Handlestate)
     return (
         <form>
             <h2>Assignment First </h2>
@@ -48,7 +49,7 @@ export const AssignmentFirst = () => {
                 <input
                     type="number"
                     name="firstIP"
-                    value={value.firstIP}
+                    value={value.firstIP || Number(Handlestate?.firstIP) }
                     onChange={handleInput}
                 />
             </div>
@@ -57,7 +58,7 @@ export const AssignmentFirst = () => {
                 <input
                     type="number"
                     name="secondIP"
-                    value={value.secondIP}
+                    value={value.secondIP || Number(Handlestate?.secondIP)}
                     onChange={handleInput}
                 />
             </div>
